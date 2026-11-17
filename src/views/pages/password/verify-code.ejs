@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('../../partials/head', {
+        pageTitle: 'Verify code',
+        metaDescription: 'Enter the six-digit code sent to your email.',
+        styles: ['/css/login.css', '/css/forgot-password.css', '/css/verify-code.css']
+    }) %>
+</head>
+<body class="quizzo-body">
+<main class="recovery-page" aria-labelledby="verify-code-heading">
+    <div class="recovery-theme-toggle">
+        <button class="theme-toggle-btn" data-theme-toggle aria-label="Switch to dark mode" aria-pressed="false" type="button" title="Toggle theme (Alt+D)">
+            <i data-lucide="moon" data-theme-icon="moon" aria-hidden="true"></i>
+            <i data-lucide="sun" data-theme-icon="sun" aria-hidden="true" style="display:none"></i>
+        </button>
+    </div>
+
+    <section class="recovery-card verify-card" aria-label="Verify code">
+        <a class="verify-back-button" href="/forgot-password" aria-label="Back to forgot password" title="Back to forgot password">
+            <i data-lucide="arrow-left" aria-hidden="true"></i>
+        </a>
+
+        <header class="recovery-card-header">
+            <h1 class="recovery-heading" id="verify-code-heading">Verify Code</h1>
+            <p class="recovery-description verify-description">We sent a 6-digit code to <span class="recovery-email-display" id="recovery-email-display">your email</span>. Enter it below to continue.</p>
+        </header>
+
+        <form class="verify-form" id="verify-code-form" novalidate>
+            <div class="otp-inputs" role="group" aria-label="Six-digit verification code">
+                <% for (let i = 1; i <= 6; i++) { %>
+                    <input
+                        class="otp-digit"
+                        type="text"
+                        id="otp-digit-<%= i %>"
+                        name="otpDigit<%= i %>"
+                        aria-label="Digit <%= i %> of 6"
+                        inputmode="numeric"
+                        pattern="[0-9]*"
+                        maxlength="1"
+                        required
+                        autocomplete="<%= i === 1 ? 'one-time-code' : 'off' %>"
+                        autocapitalize="off"
+                        spellcheck="false"
+                        aria-describedby="otp-code-error"
+                    />
+                <% } %>
+            </div>
+
+            <span class="form-field-error otp-error" id="otp-code-error" role="alert" aria-live="polite" hidden></span>
+
+            <button class="btn-login verify-submit" id="verify-code-button" type="submit">
+                <span class="btn-login-label">VERIFY CODE</span>
+                <i data-lucide="arrow-right" aria-hidden="true"></i>
+            </button>
+        </form>
+
+        <p class="resend-code">Didn't receive the code? <button type="button" class="resend-code-button">Resend</button></p>
+    </section>
+</main>
+
+<%- include('../../partials/scripts', { scripts: [] }) %>
+<script type="module" src="/js/verify-code.js"></script>
+</body>
+</html>

@@ -1,0 +1,22 @@
+<%#
+    Quizzo — Page Scripts Partial
+    Usage: include('../partials/scripts', { scripts })
+%>
+
+    <%# Lucide icon activation — must run after DOM is ready %>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            if (typeof lucide !== 'undefined') lucide.createIcons();
+        });
+    </script>
+
+    <%# Theme system — shared across all pages %>
+    <script src="/js/theme.js"></script>
+
+    <%# Page-specific scripts %>
+    <% if (typeof scripts !== 'undefined' && scripts.length) { %>
+        <% scripts.forEach(function(src) { %>
+            <script src="<%= src %>"></script>
+        <% }); %>
+    <% } %>
+

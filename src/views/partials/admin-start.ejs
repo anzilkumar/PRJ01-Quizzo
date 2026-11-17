@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Quizzo administration · <%= page.title %>">
+  <title><%= page.title %> · Quizzo Admin</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/lucide-static@latest/font/lucide.css">
+  <link rel="stylesheet" href="/css/admin.css">
+</head>
+<body class="admin-body">
+<div class="admin-frame">
+  <aside class="admin-sidebar" id="admin-sidebar">
+    <a class="admin-brand" href="/admin" aria-label="Quizzo admin home"><span class="brand-mark">q.</span><span>Quizzo<span class="brand-small">/ admin</span></span></a>
+    <div class="sidebar-label">WORKSPACE</div>
+    <nav class="admin-nav" aria-label="Administration">
+      <% const navItems = [['overview','/admin','Overview','layout-dashboard'],['quizzes','/admin/quizzes','Quizzes','notebook-tabs'],['users','/admin/users','People','users-round'],['competitions','/admin/competitions','Competitions','trophy'],['sales','/admin/sales','Sales','chart-no-axes-combined']]; %>
+      <% navItems.forEach(([key,href,label,icon]) => { %><a class="admin-nav-link <%= page.nav === key ? 'is-active' : '' %>" href="<%= href %>" <%= page.nav === key ? 'aria-current="page"' : '' %>><i data-lucide="<%= icon %>"></i><span><%= label %></span><% if (page.nav === key) { %><span class="nav-mark"></span><% } %></a><% }); %>
+    </nav>
+    <div class="sidebar-foot"><span class="status-dot"></span><span>All systems quiet</span></div>
+  </aside>
+  <button class="sidebar-scrim" type="button" aria-label="Close menu" data-close-menu hidden></button>
+  <main class="admin-main">
+    <header class="admin-topbar">
+      <button class="icon-button mobile-menu" type="button" aria-label="Open menu" data-open-menu><i data-lucide="menu"></i></button>
+      <div class="crumb">QUIZZO <span>/</span> ADMIN <span>/</span> <b><%= page.nav === 'overview' ? 'OVERVIEW' : page.nav.toUpperCase() %></b></div>
+      <div class="top-actions"><span class="top-date">16 NOV 2026</span><button class="icon-button" type="button" data-theme-toggle aria-label="Toggle theme"><i data-lucide="moon"></i></button><button class="profile-button" type="button" data-menu-toggle aria-expanded="false"><span class="avatar">A</span><span class="profile-copy"><b>Admin</b><small>Workspace</small></span><i data-lucide="chevron-down"></i></button><div class="profile-menu" data-profile-menu hidden><a href="/admin/login">Sign out</a></div></div>
+    </header>
+    <div class="admin-content">
+      <div class="page-heading"><div><div class="eyebrow"><span class="eyebrow-rule"></span><%= page.eyebrow %></div><h1><%= page.title %></h1><p><%= page.intro %></p></div>
+      <% if (page.action) { %><a class="button button-primary" href="<%= page.action %>"><i data-lucide="plus"></i><%= page.actionLabel %></a><% } %></div>

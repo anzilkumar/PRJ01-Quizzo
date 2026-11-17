@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" class="<%= typeof theme !== 'undefined' ? theme : 'light' %>">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="<%= typeof metaDescription !== 'undefined' ? metaDescription : 'Quizzo — Challenge your knowledge' %>" />
+    <title>Quizzo.</title>
+
+    <%# Theme flash prevention — must run before any paint %>
+    <script>
+        (function () {
+            try {
+                var saved = localStorage.getItem('quizzo-theme');
+                var preferred = saved === 'dark' ? 'dark' : 'light';
+                document.documentElement.classList.remove('light', 'dark');
+                document.documentElement.classList.add(preferred);
+            } catch (e) {}
+        })();
+    </script>
+
+    <%# Global CSS variables and base styles %>
+    <link rel="stylesheet" href="/css/theme.css" />
+
+    <%# Page-specific stylesheets %>
+    <% if (typeof styles !== 'undefined' && styles.length) { %>
+        <% styles.forEach(function(href) { %>
+            <link rel="stylesheet" href="<%= href %>" />
+        <% }); %>
+    <% } %>
+
+    <%# Lucide Icons — lightweight SVG icon library %>
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+
+    <%# GSAP Core + ScrollTrigger %>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
+</head>
+<body class="quizzo-body">
+    <%- body %>
+
+    <%# Lucide icon activation %>
+    <script>
+        if (typeof lucide !== 'undefined') lucide.createIcons();
+    </script>
+
+    <%# Theme system — shared across all pages %>
+    <script src="/js/theme.js"></script>
+
+    <%# Page-specific scripts %>
+    <% if (typeof scripts !== 'undefined' && scripts.length) { %>
+        <% scripts.forEach(function(src) { %>
+            <script src="<%= src %>" defer></script>
+        <% }); %>
+    <% } %>
+</body>
+</html>
+

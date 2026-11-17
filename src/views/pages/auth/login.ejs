@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('../../partials/head', {
+        pageTitle:       'Quizzo.',
+        metaDescription: 'Sign in to Quizzo and challenge your knowledge.',
+        styles:          ['/css/login.css']
+    }) %>
+</head>
+<body class="quizzo-body">
+
+<main class="login-page" id="login-page" aria-label="Login">
+
+    <%# ── Left Panel: Branding ──────────────────────────────────────────── %>
+    <section class="login-brand-panel" aria-hidden="true">
+        <span class="deco-orb deco-orb--mid" aria-hidden="true"></span>
+
+        <a href="/" class="brand-logo gsap-brand-logo" tabindex="-1">
+            <span class="brand-logo-mark">
+                <i data-lucide="zap"></i>
+            </span>
+            <span class="brand-logo-name">Quizzo</span>
+        </a>
+
+        <div class="brand-content">
+            <p class="brand-tagline-eyebrow gsap-brand-eyebrow">Quiz platform</p>
+            <h2 class="brand-heading gsap-brand-heading">
+                Challenge your<br /><em>knowledge.</em><br />Daily.
+            </h2>
+            <p class="brand-subheading gsap-brand-sub">
+                Compete in live quizzes, sharpen your skills, and climb the leaderboard — one question at a time.
+            </p>
+
+            <div class="brand-features gsap-brand-pills">
+                <span class="brand-feature-pill">
+                    <i data-lucide="zap"></i>
+                    Live quizzes
+                </span>
+                <span class="brand-feature-pill">
+                    <i data-lucide="trophy"></i>
+                    Leaderboards
+                </span>
+                <span class="brand-feature-pill">
+                    <i data-lucide="users"></i>
+                    Multiplayer
+                </span>
+                <span class="brand-feature-pill">
+                    <i data-lucide="bar-chart-2"></i>
+                    Analytics
+                </span>
+            </div>
+
+            <div class="brand-visual gsap-brand-visual">
+                <div class="brand-stat-cards">
+                    <div class="brand-stat-card">
+                        <div class="brand-stat-number">10K+</div>
+                        <div class="brand-stat-label">Questions</div>
+                    </div>
+                    <div class="brand-stat-card">
+                        <div class="brand-stat-number">50K+</div>
+                        <div class="brand-stat-label">Players</div>
+                    </div>
+                    <div class="brand-stat-card">
+                        <div class="brand-stat-number">200+</div>
+                        <div class="brand-stat-label">Categories</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer class="brand-footer gsap-brand-footer">
+            &copy; <%= new Date().getFullYear() %> Quizzo. All rights reserved.
+        </footer>
+    </section>
+
+    <%# ── Right Panel: Login Form ───────────────────────────────────────── %>
+    <section class="login-form-panel">
+
+        <%# Theme toggle %>
+        <div class="login-theme-toggle">
+            <button
+                class="theme-toggle-btn"
+                data-theme-toggle
+                aria-label="Switch to dark mode"
+                aria-pressed="false"
+                type="button"
+                title="Toggle theme (Alt+D)"
+            >
+                <i data-lucide="moon" data-theme-icon="moon" aria-hidden="true"></i>
+                <i data-lucide="sun"  data-theme-icon="sun"  aria-hidden="true" style="display:none"></i>
+            </button>
+        </div>
+
+        <%# Login card %>
+        <div class="login-card gsap-login-card" id="login-card">
+
+            <header class="login-card-header">
+                <p class="login-welcome-text">Welcome back</p>
+                <h1 class="login-heading">Sign in to Quizzo</h1>
+            </header>
+
+            <%# Flash / server-rendered error or success messages %>
+            <% if (typeof error !== 'undefined' && error) { %>
+                <div class="login-alert login-alert--error" role="alert" aria-live="polite">
+                    <i data-lucide="alert-circle" aria-hidden="true"></i>
+                    <span><%= error %></span>
+                </div>
+            <% } %>
+            <% if (typeof success !== 'undefined' && success) { %>
+                <div class="login-alert login-alert--success" role="alert" aria-live="polite">
+                    <i data-lucide="check-circle" aria-hidden="true"></i>
+                    <span><%= success %></span>
+                </div>
+            <% } %>
+
+            <%# Email + Password Form %>
+            <form
+                class="login-form"
+                id="login-form"
+                method="POST"
+                action="/login"
+                novalidate
+                aria-label="Email login form"
+            >
+                <%# CSRF token (rendered only if csrfToken is provided by middleware) %>
+                <% if (typeof csrfToken !== 'undefined' && csrfToken) { %>
+                    <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
+                <% } %>
+
+                <%# Email %>
+                <div class="form-field">
+                    <label class="form-label" for="email">Email address</label>
+                    <div class="form-input-wrapper">
+                        <span class="form-input-icon" aria-hidden="true">
+                            <i data-lucide="mail"></i>
+                        </span>
+                        <input
+                            class="form-input form-input--with-icon"
+                            type="email"
+                            id="email"
+                            name="email"
+                            placeholder="quizzo@example.com"
+                            autocomplete="email"
+                            autocapitalize="off"
+                            spellcheck="false"
+                            required
+                            aria-required="true"
+                            aria-describedby="email-error"
+                            value="<%= typeof prefillEmail !== 'undefined' ? prefillEmail : '' %>"
+                        />
+                    </div>
+                    <span
+                        class="form-field-error"
+                        id="email-error"
+                        role="alert"
+                        aria-live="polite"
+                        hidden
+                    ></span>
+                </div>
+
+                <%# Password %>
+                <div class="form-field">
+                    <label class="form-label" for="password">Password</label>
+                    <div class="form-input-wrapper">
+                        <span class="form-input-icon" aria-hidden="true">
+                            <i data-lucide="lock"></i>
+                        </span>
+                        <input
+                            class="form-input form-input--with-icon form-input--with-trailing"
+                            type="password"
+                            id="password"
+                            name="password"
+                            placeholder="Enter your password"
+                            autocomplete="current-password"
+                            required
+                            aria-required="true"
+                            aria-describedby="password-error"
+                        />
+                        <button
+                            class="password-toggle"
+                            type="button"
+                            id="password-toggle"
+                            aria-label="Show password"
+                            aria-controls="password"
+                            aria-pressed="false"
+                            data-password-label="password"
+                        >
+                            <i data-lucide="eye" data-eye aria-hidden="true"></i>
+                            <%- include('../../partials/password-eye-off') %>
+                        </button>
+                    </div>
+                    <span
+                        class="form-field-error"
+                        id="password-error"
+                        role="alert"
+                        aria-live="polite"
+                        hidden
+                    ></span>
+                </div>
+
+                <%# Forgot password %>
+                <div class="form-row form-row--forgot">
+                    <a class="forgot-link" href="/forgot-password">Forgot password?</a>
+                </div>
+
+                <%# Submit button %>
+                <button
+                    class="btn-login"
+                    type="submit"
+                    id="btn-login"
+                    aria-label="Sign in"
+                >
+                    <span class="btn-login-label">Sign in</span>
+                    <span class="spinner" aria-hidden="true"></span>
+                </button>
+
+            </form>
+
+            <%# Google sign in is a visual-only option %>
+            <div class="form-divider">
+                <span class="form-divider-text">OR CONTINUE WITH</span>
+            </div>
+
+            <button
+                class="btn-google"
+                id="btn-google"
+                type="button"
+                aria-label="Sign in with Google"
+            >
+                <svg class="google-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                    <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
+                    <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
+                    <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/>
+                    <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.47 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
+                </svg>
+                Sign in with Google
+            </button>
+
+            <p class="login-subheading login-signup">
+                Don't have an account? <a href="/signup">Create an Account</a>
+            </p>
+
+        </div><%# /login-card %>
+
+    </section><%# /login-form-panel %>
+
+</main><%# /login-page %>
+
+<%- include('../../partials/scripts', { scripts: ['/js/login.js'] }) %>
+<script type="module" src="/js/signin.js"></script>
+<script type="module" src="/js/forgot-password-transfer.js"></script>
+
+</body>
+</html>

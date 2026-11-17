@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('../partials/head', {
+        pageTitle: 'Home',
+        metaDescription: 'Welcome to Quizzo.',
+        styles: ['/css/home.css']
+    }) %>
+</head>
+<body class="quizzo-body">
+<div class="home-shell">
+    <%- include('../partials/header', { currentPath }) %>
+
+    <main class="home-main">
+        <div class="home-welcome">
+            <h1>Please log in with an account to continue.</h1>
+            <button class="home-logout-button" type="button">Logout</button>
+        </div>
+    </main>
+
+    <%- include('../partials/footer') %>
+</div>
+
+<%- include('../partials/scripts', { scripts: ['/js/navbar.js'] }) %>
+</body>
+</html>

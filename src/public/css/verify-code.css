@@ -1,0 +1,70 @@
+.verify-card { width: min(100%, 500px); }
+.verify-back-button {
+    display: grid;
+    width: 40px;
+    height: 40px;
+    place-items: center;
+    margin-bottom: 1rem;
+    border: 1px solid var(--color-border);
+    border-radius: 50%;
+    background: var(--color-card);
+    color: var(--color-text-secondary);
+    text-decoration: none;
+    transition: border-color var(--transition-fast), background-color var(--transition-theme), color var(--transition-fast), transform var(--transition-fast);
+}
+.verify-back-button:hover { transform: translateX(-2px); border-color: var(--color-accent); color: var(--color-accent); }
+.verify-back-button svg { width: 18px; height: 18px; }
+.verify-back-button:focus-visible { outline: 3px solid var(--color-accent); outline-offset: 3px; }
+.verify-card .recovery-card-header { margin-bottom: 2rem; text-align: center; }
+.verify-description { width: min(100%, 390px); margin-inline: auto; line-height: 1.65; text-align: center; text-wrap: pretty; }
+.verify-description .recovery-email-display { display: inline-block; max-width: 100%; vertical-align: baseline; overflow-wrap: anywhere; }
+.verify-form { display: flex; flex-direction: column; gap: 1.6rem; }
+.otp-inputs {
+    display: grid;
+    width: 100%;
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    gap: clamp(0.35rem, 2.1vw, 0.7rem);
+}
+.otp-digit {
+    width: 100%;
+    min-width: 0;
+    max-height: 60px;
+    aspect-ratio: 0.82;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    outline: none;
+    background: var(--color-input-bg);
+    color: var(--color-text-primary);
+    font-family: var(--font-display);
+    font-size: clamp(1.35rem, 5vw, 1.75rem);
+    font-weight: 750;
+    line-height: 1;
+    text-align: center;
+    caret-color: var(--color-accent);
+    appearance: none;
+    transition: border-color var(--transition-fast), background-color var(--transition-theme), color var(--transition-theme), box-shadow var(--transition-fast);
+}
+.otp-digit.is-filled { border-color: color-mix(in srgb, var(--color-accent) 48%, var(--color-border)); background: color-mix(in srgb, var(--color-accent) 7%, var(--color-input-bg)); }
+.otp-digit:focus { border-color: var(--color-border-focus); outline: none; box-shadow: 0 0 0 4px var(--color-shadow); }
+.otp-digit[aria-invalid="true"] { border-color: var(--color-error); }
+.otp-digit[aria-invalid="true"]:focus { border-color: var(--color-error); box-shadow: 0 0 0 4px color-mix(in srgb, var(--color-error) 16%, transparent); }
+.otp-error[hidden] { display: none; }
+.recovery-email-display { color: var(--color-text-primary); font-weight: 650; overflow-wrap: anywhere; }
+.verify-submit { width: 100%; gap: 0.6rem; text-transform: uppercase; }
+.verify-submit svg { width: 18px; height: 18px; }
+.resend-code { margin-top: 1.65rem; color: var(--color-text-secondary); font-size: 0.84rem; text-align: center; }
+.resend-code-button { padding: 0; border: 0; background: transparent; color: var(--color-accent); font: inherit; font-weight: 700; cursor: pointer; }
+.resend-code-button:hover { color: var(--color-accent-hover); text-decoration: underline; text-underline-offset: 3px; }
+.verify-card .recovery-back { margin-top: 0.75rem; }
+
+@media (max-width: 480px) {
+    .verify-card .recovery-card-header { margin-bottom: 1.55rem; }
+    .verify-form { gap: 1.3rem; }
+    .otp-digit { border-radius: 10px; }
+    .resend-code { margin-top: 1.3rem; }
+}
+
+@media (max-width: 360px) {
+    .otp-inputs { gap: 0.3rem; }
+    .otp-digit { border-radius: 8px; }
+}
