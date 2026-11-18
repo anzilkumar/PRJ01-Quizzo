@@ -46,6 +46,5 @@ document.addEventListener('DOMContentLoaded', () => {
   document.querySelector('[data-dialog-close]')?.addEventListener('click', () => dialog?.close());
   dialog?.addEventListener('click', event => { if (event.target === dialog) dialog.close(); });
   document.querySelector('[data-editor-form]')?.addEventListener('submit', event => { event.preventDefault(); showToast('Preview only — nothing was saved.'); });
-  document.querySelector('[data-login-form]')?.addEventListener('submit', event => { event.preventDefault(); const message = document.querySelector('[data-login-message]'); if (message) message.textContent = 'Sign in is not connected in this frontend preview.'; });
   if (window.gsap && !matchMedia('(prefers-reduced-motion: reduce)').matches) gsap.from('.admin-content > *', { y: 10, opacity: 0, duration: .42, stagger: .06, ease: 'power2.out' });
 });

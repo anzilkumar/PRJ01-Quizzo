@@ -10,7 +10,7 @@ export function validateFullName(value) {
     if (value.trim() !== value) return { valid: false, message: 'Do not add spaces before or after your name.' };
     if (value.length < 3) return { valid: false, message: 'Name must be at least 3 letters.' };
     if (value.length > 50) return { valid: false, message: 'Name must be no more than 50 letters.' };
-    if (!/^[A-Za-z]{3,50}$/.test(value)) return { valid: false, message: 'Use English letters only, with no spaces or symbols.' };
+    if (!/^[A-Za-z]{3,50}(?: [A-Za-z]+)*$/.test(value)) return { valid: false, message: 'Use English letters only, with single spaces between words.' };
     return { valid: true, message: '' };
 }
 

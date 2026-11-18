@@ -8,7 +8,7 @@ if (form) {
     const password = form.elements.password;
     const referralCode = form.elements.referralCode;
     const button = document.getElementById('btn-signup');
-    const validateName = bindFieldValidation(name, validateFullName);
+    const validateName = bindFieldValidation(name, validateFullName, { normalize: (value) => value.replace(/ {2,}/g, ' ') });
     const validateEmailField = bindFieldValidation(email, validateEmail, { normalize: normalizeEmail });
     const validatePassword = bindFieldValidation(password, validateSignupPassword);
     const validateReferralCode = () => {
